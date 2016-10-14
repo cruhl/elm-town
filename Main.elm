@@ -1,8 +1,9 @@
 module Main exposing (main)
 
-import Mouse exposing (Position)
 import Html.App exposing (program)
 import Html exposing (Html, div, text)
+import Html.Attributes exposing (style)
+import Utils exposing (noCmds, (=>), pc)
 import Cursor
 
 
@@ -10,43 +11,46 @@ main : Program Never
 main =
     program
         { init = ( init, Cmd.none )
-        , subscriptions = \_ -> Mouse.moves MoveMouse
+        , subscriptions = subscriptions
         , update = update
         , view = view
         }
 
 
 type alias Model =
-    { mousePosition : Position }
+    { cursor : Cursor.Model }
 
 
 type Msg
-    = MoveMouse Position
+    = CursorMsg Cursor.Msg
 
 
 init : Model
 init =
     Model
-        (Position 0 0)
+        Cursor.init
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        MoveMouse toPosition ->
-            let
-                newPosition =
-                    updateMousePosition model.mousePosition toPosition
-            in
-                ( { model | mousePosition = newPosition }, Cmd.none )
+        CursorMsg subMsg ->
+            noCmds { model | cursor = Cursor.update subMsg model.cursor }
 
 
-updateMousePosition : Position -> Position -> Position
-updateMousePosition position { x, y } =
-    { position | x = x, y = y }
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.map CursorMsg Cursor.subscriptions
 
 
-view : Model -> Html Msg
-view { mousePosition } =
-    div []
-        [ Cursor.view mousePosition ]
+view : Model -> Html msg
+view { cursor } =
+    let
+        css =
+            style
+                [ "width" => pc 100
+                , "height" => pc 100
+                , "background" => "hsl(113, 24%, 35%)"
+                ]
+    in
+        div [ css ] [ Cursor.view cursor ]
