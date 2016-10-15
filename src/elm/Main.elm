@@ -2,9 +2,10 @@ module Main exposing (main)
 
 import Html.App exposing (program)
 import Html exposing (Html, div, text)
-import Html.Attributes exposing (style)
+import Html.Attributes exposing (class)
 import Utils exposing (noCmds, (=>), pc)
 import Cursor
+import Roads
 
 
 main : Program Never
@@ -18,7 +19,9 @@ main =
 
 
 type alias Model =
-    { cursor : Cursor.Model }
+    { cursor : Cursor.Model
+    , roads : Roads.Model
+    }
 
 
 type Msg
@@ -29,6 +32,7 @@ init : Model
 init =
     Model
         Cursor.init
+        Roads.init
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -44,13 +48,8 @@ subscriptions model =
 
 
 view : Model -> Html msg
-view { cursor } =
-    let
-        css =
-            style
-                [ "width" => pc 100
-                , "height" => pc 100
-                , "background" => "hsl(113, 24%, 35%)"
-                ]
-    in
-        div [ css ] [ Cursor.view cursor ]
+view { cursor, roads } =
+    div [ class "wrapper" ]
+        [ Cursor.view cursor
+        , Roads.view roads
+        ]

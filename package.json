@@ -1,0 +1,33 @@
+{
+  "name": "elm-town",
+  "version": "1.0.0",
+  "description": "Hopefully this turns into a city simulator.",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "dev": "webpack-dev-server --port 3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cruhl/elm-town.git"
+  },
+  "keywords": [
+    "elm",
+    "game"
+  ],
+  "author": "cruhl",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^0.25.0",
+    "elm-webpack-loader": "^3.0.6",
+    "file-loader": "^0.9.0",
+    "node-sass": "^3.10.1",
+    "sass-loader": "^4.0.2",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.2",
+    "webpack-dev-middleware": "^1.8.2",
+    "webpack-dev-server": "^1.16.1"
+  },
+  "dependencies": {}
+}
