@@ -1,6 +1,5 @@
 module Main exposing (main)
 
-import Html.App exposing (program)
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 import Utils exposing (noCmds, (=>), pc)
@@ -8,9 +7,9 @@ import Cursor
 import Roads
 
 
-main : Program Never
+main : Program Never Model Msg
 main =
-    program
+    Html.program
         { init = ( init, Cmd.none )
         , subscriptions = subscriptions
         , update = update
