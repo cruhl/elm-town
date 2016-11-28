@@ -2,7 +2,6 @@ module Main exposing (main)
 
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
-import Utils exposing (noCmds, (=>), pc)
 import Cursor
 import Roads
 
@@ -38,7 +37,11 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         CursorMsg subMsg ->
-            noCmds { model | cursor = Cursor.update subMsg model.cursor }
+            let
+                updatedModel =
+                    { model | cursor = Cursor.update subMsg model.cursor }
+            in
+                ( updatedModel, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
